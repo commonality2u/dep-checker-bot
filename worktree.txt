@@ -1,0 +1,29 @@
+dep-checker-bot/
+├── main.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+├── license_policy.json
+├── .securepolicy.yml  # opcional
+├── audit/
+│   ├── __init__.py
+│   ├── dependency_checker.py
+│   ├── license_checker.py
+│   ├── policy_loader.py
+│   ├── report_generator.py
+│   ├── badge_generator.py
+│   ├── audit_history.py
+│   ├── auto_pr_generator.py
+│   ├── nlp_report_summarizer.py  # opcional
+├── github/
+│   ├── api_client.py
+│   ├── github_action_runner.py
+├── .github/
+│   └── workflows/
+│       └── audit.yml
+├── tests/
+│   ├── test_dependencies.py
+│   ├── test_licenses.py
+│   ├── ...
+└── docs/
+    └── ...
