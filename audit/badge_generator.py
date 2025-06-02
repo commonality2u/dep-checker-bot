@@ -58,7 +58,7 @@ def generate_badge(audit_summary, output_path_svg="badge.svg", output_path_png=N
     # Renderizar el badge
     badge_content = BADGE_TEMPLATE.format(color=color, status=status_text, report_link=report_link)
 
-    with open(output_path, "w") as f:
+    with open(output_path_svg, "w") as f:
         f.write(badge_content)
 
     print(f"[+] Badge generated: {output_path_svg}")

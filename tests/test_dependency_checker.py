@@ -1,0 +1,28 @@
+# test_dependency_checker.py
+
+import unittest
+from unittest.mock import patch
+import dependency_checker
+
+class TestDependencyChecker(unittest.TestCase):
+    @patch('dependency_checker.subprocess.run')
+    def test_check_outdated_dependencies_pip(self, mock_run):
+        mock_run.return_value.stdout = json.dumps([
+            {"name": "requests", "version": "2.25.0", "latest_version": "2.31.0"}
+        ])
+        result = dependency_checker.check_outdated_dependencies()
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['name'], "requests")
+
+    @patch('dependency_checker.subprocess.run')
+    def test_check_vulnerabilities_pip_audit(self, mock_run):
+        mock_run.return_value.stdout = json.dumps([
+            {"name": "requests", "version": "2.25.0", "vulns": [{"id": "CVE-1234", "description": "Test vuln"}]}
+        ])
+        result = dependency_checker.check_vulnerabilities()
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['name'], "requests")
+        self.assertEqual(result[0]['vulnerabilities'][0]['id'], "CVE-1234")
+
+if __name__ == '__main__':
+    unittest.main()
