@@ -3,7 +3,7 @@
 import datetime
 import cairosvg
 
-# Template para el badge
+# Teamplate for the badge SVG
 BADGE_TEMPLATE = """
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="20">
   <linearGradient id="b" x2="0" y2="100%">
@@ -31,39 +31,39 @@ BADGE_TEMPLATE = """
 # Función para generar el badge
 def generate_badge(status, vulnerabilities_count=0, output_path_svg="badge.svg", output_path_png=None, report_link="https://example.com/report"):
     """
-    Genera un badge SVG y opcionalmente PNG.
+    Generates an SVG badge and optionally a PNG badge.
 
-    :param status: Estado general ('Seguro', 'Desactualizado', 'Vulnerable').
-    :param vulnerabilities_count: Número de vulnerabilidades encontradas.
-    :param output_path_svg: Ruta donde se guardará el badge SVG.
-    :param output_path_png: Ruta para el badge PNG (opcional).
-    :param report_link: Enlace al reporte detallado.
+    :param status: Overall status ('Secure', 'Outdated', 'Vulnerable').
+    :param vulnerabilities_count: Number of vulnerabilities found.
+    :param output_path_svg: Path where the SVG badge will be saved.
+    :param output_path_png: Path to the PNG badge (optional).
+    :param report_link: Link to the detailed report.
     """
     date = datetime.datetime.now().strftime("%Y-%m-%d")
 
-    # Elegir color según estado
-    if status.lower() == "seguro":
-        color = "#4c1"        # Verde
-    elif status.lower() == "desactualizado":
-        color = "#dfb317"    # Amarillo
-    elif status.lower() == "vulnerable":
-        color = "#e05d44"    # Rojo
+    # Choose color based on status
+    if status.lower() == "Secure":
+        color = "#4c1"        # Green
+    elif status.lower() == "Outdated":
+        color = "#dfb317"    # Yellow
+    elif status.lower() == "Vulnerable":
+        color = "#e05d44"    # Red
     else:
-        color = "#9f9f9f"    # Gris por defecto
+        color = "#9f9f9f"    # Grey (default)
 
-    # Texto del estado (con fecha y vulnerabilidades)
+    # Status text (with date and vulnerabilities)
     status_text = f"{status} ({vulnerabilities_count}) - {date}"
 
-    # Renderizar el badge
+    # Render the badge
     badge_content = BADGE_TEMPLATE.format(color=color, status=status_text, report_link=report_link)
 
-    # Guardar el SVG
+    # Save the SVG
     with open(output_path_svg, "w") as f:
         f.write(badge_content)
 
-    print(f"[+] Badge SVG generado: {output_path_svg}")
+    print(f"[+] Badge SVG generated: {output_path_svg}")
 
-    # Opcional: convertir a PNG
+    # Optional: convert to PNG
     if output_path_png:
         cairosvg.svg2png(bytestring=badge_content.encode('utf-8'), write_to=output_path_png)
-        print(f"[+] Badge PNG generado: {output_path_png}")
+        print(f"[+] Badge PNG generated: {output_path_png}")
