@@ -84,6 +84,7 @@ def check_licenses(requirements_file="requirements.txt", use_poetry=False, outpu
             })
 
         # Check for disallowed licenses
+        export_licenses_to_json(licenses, output_file)
         check_disallowed_licenses(licenses)
     except FileNotFoundError as e:
         logging.error(f"Error: {e}. Ensure pip-licenses is installed.")
