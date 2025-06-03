@@ -7,11 +7,11 @@ dep-checker-bot/
 ├── .securepolicy.yml  # opcional
 ├── audit/
 │   ├── __init__.py
-│   ├── dependency_checker.py
-│   ├── license_checker.py
-│   ├── policy_loader.py
-│   ├── report_generator.py
-│   ├── badge_generator.py
+│   ├── dependency_checker.py #done
+│   ├── license_checker.py #done
+│   ├── policy_loader.py #done
+│   ├── report_generator.py #done 
+│   ├── badge_generator.py #done
 │   ├── audit_history.py
 │   ├── auto_pr_generator.py
 │   ├── nlp_report_summarizer.py  # opcional
