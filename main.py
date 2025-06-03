@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-# Importar módulos (estos nombres se basan en tu estructura, ajusta si es necesario)
+#Import modules (these names are based on your structure, adjust if necessary)
 from audit import (
     audit_history,
     auto_pr_generator,
@@ -16,9 +16,8 @@ from audit import (
 )
 
 def run_all():
-    print("[INFO] Ejecutando todas las auditorías...")
-    # Aquí puedes llamar a las funciones principales de cada módulo
-    # Por ejemplo:
+    print("[INFO] Running all audits ...")
+    # Here you can call the main functions of each module
     audit_history.run()
     auto_pr_generator.run()
     badge_generator.run()
@@ -27,11 +26,11 @@ def run_all():
     nlp_report_summarizer.run()
     policy_loader.run()
     report_generator.run()
-    print("[INFO] Todas las auditorías se han ejecutado correctamente.")
+    print("[INFO] All audits have been executed correctly.")
 
 def run_module(module_name):
-    print(f"[INFO] Ejecutando auditoría: {module_name}")
-    # Podrías mapear módulos a funciones principales
+    print(f"[INFO] Running audit: {module_name}")
+    # You could map modules to main functions
     module_map = {
         "audit_history": audit_history.run,
         "auto_pr_generator": auto_pr_generator.run,
@@ -44,19 +43,19 @@ def run_module(module_name):
     }
     try:
         module_map[module_name]()
-        print(f"[INFO] Auditoría '{module_name}' ejecutada con éxito.")
+        print(f"[INFO] Audit '{module_name}' successfully executed.")
     except KeyError:
-        print(f"[ERROR] Módulo '{module_name}' no encontrado.")
+        print(f"[ERROR] Module '{module_name}' not found.")
         sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Dep Checker Bot - Herramienta para auditar dependencias y generar reportes."
+        description="Dep Checker Bot - Tool to audit dependencies and generate reports."
     )
     parser.add_argument(
         "--module",
         type=str,
-        help="Nombre del módulo de auditoría a ejecutar (o 'all' para ejecutarlos todos).",
+        help="Name of the audit module to run (or 'all' to run them all).",
         default="all"
     )
     args = parser.parse_args()
