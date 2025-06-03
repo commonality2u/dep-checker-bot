@@ -25,5 +25,5 @@ dep-checker-bot/
 │   ├── test_dependencies.py
 │   ├── test_licenses.py
 │   ├── ...
-└── docs/
+└── docs
     └── ...

@@ -2,7 +2,7 @@
 
 import unittest
 from unittest.mock import patch
-import dependency_checker
+from audit import dependency_checker
 
 class TestDependencyChecker(unittest.TestCase):
     @patch('dependency_checker.subprocess.run')
