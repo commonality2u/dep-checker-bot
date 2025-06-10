@@ -12,9 +12,9 @@ dep-checker-bot/
 │   ├── policy_loader.py #done
 │   ├── report_generator.py #done 
 │   ├── badge_generator.py #done
-│   ├── audit_history.py
-│   ├── auto_pr_generator.py
-│   ├── nlp_report_summarizer.py  # opcional
+│   ├── audit_history.py #done 
+│   ├── auto_pr_generator.py # done
+│   ├── nlp_report_summarizer.py  # opcional #done
 ├── github/
 │   ├── api_client.py
 │   ├── github_action_runner.py
