@@ -19,7 +19,7 @@
 
 1. Clone this repository:
 ```bash
-   git clone https://github.com/tu-usuario/dep-checker-bot.git
+   git clone https://github.com/javiifu/dep-checker-bot.git
    cd dep-checker-bot
    ```
 2. (Optional) Create a virtual environment:
