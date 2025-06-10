@@ -13,10 +13,9 @@ Alright! Let’s get `dep-checker-bot` up and running on your machine. Follow th
 First, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/dep-checker-bot.git
+git clone https://github.com/javiifu/dep-checker-bot.git
 cd dep-checker-bot
 ```
-*(Replace `yourusername` with your actual GitHub username.)*
 
 ## Step 2. Create a Virtual Environment (Recommended)
 
@@ -28,6 +27,8 @@ source venv/bin/activate  # On Linux/macOS
 venv\Scripts\activate     # On Windows
 ```
 
+**Note:** On some systems you might need to use `python3` and `pip3` instead of `python` and `pip`.
+
 ## Step 3. Install Dependencies
 
 Now install the dependencies using the `requirements.txt` file:
@@ -38,6 +39,14 @@ pip install -r requirements.txt
 
 This will install all the packages required to run the bot.
 
+## Updating Dependencies
+
+To update dependencies later on, you can run:
+
+```bash
+pip install --upgrade -r requirements.txt
+```
+
 ## Step 4. Verify Installation
 
 Run the following command to make sure everything is working:
@@ -47,6 +56,10 @@ python main.py --help
 ```
 
 You should see the help menu with the available commands.
+
+## Optional Configuration
+
+If your project requires credentials (for example, GitHub API tokens), create a `.env` file in the root directory or set the necessary environment variables.
 
 ## Troubleshooting
 
