@@ -54,13 +54,16 @@ Then, in your code, parse this file using a library like `pyyaml` or `json` to l
 ## Notes
 
 - Always keep your `.env` file out of version control by adding it to `.gitignore`.
-- Don’t share your tokens publicly.
+- Never commit your credentials to version control.
+- Validate your token’s permissions (e.g. repo scope) to ensure full functionality.
+- Keep your configuration consistent across environments to avoid surprises.
 
 ## Troubleshooting
 
 - **Authentication errors:** Check that your token has the necessary scopes and that it’s loaded correctly.
 - **Missing environment variables:** Ensure your environment variables are set properly in your shell or CI/CD environment. Sometimes a shell restart is required.
 - **Configuration file not found:** Make sure the configuration file is named correctly and located in the root of your project or the specified directory.
+- **Invalid YAML/JSON:** Validate your config file format to prevent parsing errors.
 
 ---
 
