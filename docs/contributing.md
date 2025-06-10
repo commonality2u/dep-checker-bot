@@ -57,7 +57,16 @@ If you improve or fix any part of the documentation, feel free to update the rel
 - Check the `README.md` and `docs/installation.md` to set up the project locally.
 - Familiarize yourself with the project structure and modular architecture.
 - Explore `main.py` for the CLI entry point.
+- Consider running `python main.py --help` to review available commands.
+
+## Additional Tips
+
+- Leave comments in your code where appropriate to explain complex logic.
+- Keep commits atomic and descriptive to make code reviews easier.
+- If you add new features, update or add new tests to cover them.
+- Run the linter (if available) to keep the code clean.
+- Check the CI/CD pipeline status and fix any failing jobs before merging.
 
 ## Thanks!
-
-Thank you for helping to improve **dep-checker-bot**! 🚀
+Also if you like the dep-checker-bot, don't forget to give this repository a star ⭐ so it can reach more people!
+Thank you for helping to improve **dep-checker-bot**!
