@@ -90,4 +90,21 @@ We’re excited to welcome new contributors! 🎉 Please read the [Contributing 
 
 If you have any questions or need help, please open an issue on GitHub or start a discussion.
 
-We appreciate your interest and support! 🚀
+We appreciate your interest and support! 
+
+## License
+
+Include the project’s license here (e.g. MIT License, Apache 2.0). Add a link to the `LICENSE` file in the root of the repository.
+
+## Version
+
+Specify the current version of the project, e.g. v1.0.0. If you’re using versioning tools (e.g. Git tags), mention how to find the latest stable version.
+
+## Maintainers
+
+List the main maintainers of the project and a contact email (if applicable). For example:
+
+- Javier Beltrán (@javiifu)
+- GitHub Issues (preferred contact method)
+
+Add these sections near the end of your `index.md` to provide transparency and build trust with users and potential contributors.
