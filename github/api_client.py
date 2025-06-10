@@ -19,6 +19,17 @@ class GitHubAPIClient:
             "Authorization": f"token {self.token}",
             "Accept": "application/vnd.github.v3+json"
         }
+    
+    def _handle_response(self, response):
+        """
+        Handles the response from GitHub API, raising a detailed error if needed.
+        """
+        try:
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.HTTPError as e:
+            print(f"GitHub API error: {e} - {response.text}")
+            raise
 
     def create_issue(self, owner, repo, title, body):
         """
@@ -27,8 +38,7 @@ class GitHubAPIClient:
         url = f"{self.base_url}/repos/{owner}/{repo}/issues"
         payload = {"title": title, "body": body}
         response = requests.post(url, headers=self._headers(), json=payload)
-        response.raise_for_status()
-        return response.json()
+        return self._handle_response(response)
 
     def create_pull_request(self, owner, repo, head, base, title, body):
         """
@@ -42,8 +52,7 @@ class GitHubAPIClient:
             "body": body
         }
         response = requests.post(url, headers=self._headers(), json=payload)
-        response.raise_for_status()
-        return response.json()
+        return self._handle_response(response)
 
     def comment_on_issue(self, owner, repo, issue_number, comment_body):
         """
@@ -52,5 +61,6 @@ class GitHubAPIClient:
         url = f"{self.base_url}/repos/{owner}/{repo}/issues/{issue_number}/comments"
         payload = {"body": comment_body}
         response = requests.post(url, headers=self._headers(), json=payload)
-        response.raise_for_status()
-        return response.json()
+        return self._handle_response(response)
+    
+    
