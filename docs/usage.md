@@ -2,6 +2,10 @@
 
 Now that you’ve installed **dep-checker-bot**, let’s dive into how to actually use it.
 
+## Before You Start
+
+If you haven’t set up the tool yet, make sure you’ve followed the [Installation Guide](installation.md) first.
+
 ## Basic Usage
 
 The main entry point is the `main.py` file, which includes a command-line interface (CLI) that lets you check dependencies, vulnerabilities, and licenses.
@@ -82,9 +86,18 @@ If your project requires API tokens or other settings, set them via a `.env` fil
 
 ## Tips
 
-- Always activate your virtual environment before running the CLI.
-- Combine commands in CI/CD pipelines to automate checks.
+- Always run in a virtual environment.
+- Use `--dry-run` before making changes to review the output safely.
+- Combine commands in CI/CD to automate checks.
+- Review output carefully before applying changes.
 
----
+## Contributing
 
-Check out the [Installation Guide](installation.md) if you haven’t set up the tool yet. For this tool to work, it must be installed correctly beforehand.
+If you’d like to contribute, check out the [Contributing Guide](contributing.md). 🚀
+
+## Compatibility
+
+Tested on Linux/macOS and Windows.
+
+--- 
+
