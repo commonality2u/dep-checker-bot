@@ -26,3 +26,11 @@ jobs:
 
     - name: Run tests
       run: pytest tests/
+
+    - name: Run audit script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPO_OWNER: ${{ github.repository_owner }}
+        GITHUB_REPO_NAME: ${{ github.event.repository.name }}
+      run: |
+        python github/github_action_runner.py
