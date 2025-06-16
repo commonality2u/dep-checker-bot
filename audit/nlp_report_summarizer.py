@@ -7,8 +7,8 @@ from pathlib import Path
 
 logging.basicConfig(
     level=logging.INFO,
-    format='[%(levelname)s] %(asctime)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
+    format="[%(levelname)s] %(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 def summarize_report(report_file="audit_report.json"):
@@ -28,7 +28,7 @@ def summarize_report(report_file="audit_report.json"):
         return "Error reading audit report."
 
     summary_parts = []
-    report_date = report.get('report_date', 'Unknown date')
+    report_date = report.get("report_date", "Unknown date")
     outdated_count = report.get("summary", {}).get("outdated_dependencies_count", 0)
     vulnerabilities_count = report.get("summary", {}).get("vulnerabilities_count", 0)
     licenses_count = report.get("summary", {}).get("licenses_count", 0)
@@ -57,6 +57,7 @@ def summarize_report(report_file="audit_report.json"):
 
     return nlp_summary
 
+
 def generate_recommendations(report):
     """
     Generates recommendations based on outdated dependencies.
@@ -73,6 +74,7 @@ def generate_recommendations(report):
             )
     return recommendations
 
+
 def highlight_keywords(text, keywords):
     """
     Highlights specified keywords in the summary.
@@ -81,6 +83,15 @@ def highlight_keywords(text, keywords):
         text = text.replace(keyword, f"**{keyword.upper()}**")
     return text
 
-if __name__ == "__main__":
-    summary = summarize_report("audit_report.json")
+
+def run():
+    """
+    Entry point for the CLI.
+    """
+    report_file = "audit_report.json"
+    summary = summarize_report(report_file)
     print(summary)
+
+
+if __name__ == "__main__":
+    run()

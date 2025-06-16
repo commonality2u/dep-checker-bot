@@ -11,8 +11,8 @@ except ImportError:
 
 logging.basicConfig(
     level=logging.INFO,
-    format='[%(levelname)s] %(asctime)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
+    format="[%(levelname)s] %(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 DEFAULT_POLICY = {
@@ -23,6 +23,7 @@ DEFAULT_POLICY = {
         "minimum_versions": {}
     }
 }
+
 
 def load_policy(file_path="license_policy.json"):
     """
@@ -60,6 +61,7 @@ def load_policy(file_path="license_policy.json"):
     logging.info(f"✅ Policy loaded from: {file_path if policy_file.exists() else 'default'}")
     return policy
 
+
 def validate_policy_structure(policy):
     """
     Validate the structure of the policy file.
@@ -81,7 +83,12 @@ def validate_policy_structure(policy):
             logging.warning("⚠️ Policy missing 'dependencies.minimum_versions'. Adding default.")
             policy["dependencies"]["minimum_versions"] = {}
 
-if __name__ == "__main__":
 
+def run():
+    """Entry point for the CLI."""
     policy = load_policy("license_policy.json")
     print(json.dumps(policy, indent=4))
+
+
+if __name__ == "__main__":
+    run()

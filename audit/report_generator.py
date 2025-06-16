@@ -9,9 +9,10 @@ from pathlib import Path
 
 logging.basicConfig(
     level=logging.INFO,
-    format='[%(levelname)s] %(asctime)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
+    format="[%(levelname)s] %(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
+
 
 def get_environment_metadata():
     """
@@ -24,17 +25,25 @@ def get_environment_metadata():
         "platform": platform.platform()
     }
 
-def calculate_health_score(outdated, vulnerabilities, licenses, disallowed_licenses=None):
+
+def calculate_health_score(
+        outdated, vulnerabilities, licenses, disallowed_licenses=None
+        ):
     """
     Calculate an overall health score (0-100) based on audit results.
     """
     score = 100
     score -= min(len(outdated) * 5, 30)  # up to -30 points
-    score -= min(sum(len(dep.get("vulnerabilities", [])) for dep in vulnerabilities) * 10, 40)  # up to -40 points
-    flagged_licenses = [pkg for pkg in licenses if pkg.get("license") in (disallowed_licenses or [])]
+    score -= min(
+        sum(len(dep.get("vulnerabilities", [])) for dep in vulnerabilities) * 10, 40
+        )  # up to -40 points
+    flagged_licenses = [
+        pkg for pkg in licenses if pkg.get("license") in (disallowed_licenses or [])
+    ]
     score -= min(len(flagged_licenses) * 10, 30)  # up to -30 points
 
     return max(score, 0)
+
 
 def generate_markdown_report(report, output_file="audit_report.md"):
     """
@@ -53,7 +62,9 @@ def generate_markdown_report(report, output_file="audit_report.md"):
         "## Outdated Dependencies",
     ]
     for dep in report["outdated_dependencies"]:
-        lines.append(f"- {dep['name']} (current: {dep['current_version']}, latest: {dep['latest_version']})")
+        lines.append(
+            f"- {dep['name']} (current: {dep['current_version']}, latest: {dep['latest_version']})"
+            )
 
     lines.append("\n## Vulnerabilities")
     for vuln in report["vulnerabilities"]:
@@ -77,9 +88,15 @@ def generate_markdown_report(report, output_file="audit_report.md"):
     except Exception as e:
         logging.error(f"Error saving Markdown report: {e}")
 
-def generate_report(outdated_dependencies, vulnerabilities, licenses, 
-                    disallowed_licenses=None, output_file="audit_report.json", 
-                    markdown_output_file="audit_report.md"):
+
+def generate_report(
+        outdated_dependencies, 
+        vulnerabilities, 
+        licenses, 
+        disallowed_licenses=None, 
+        output_file="audit_report.json", 
+        markdown_output_file="audit_report.md"
+        ):
     """
     Generate a consolidated audit report in JSON and Markdown formats.
 
@@ -94,22 +111,26 @@ def generate_report(outdated_dependencies, vulnerabilities, licenses,
     Returns:
         dict: The consolidated report dictionary.
     """
-    health_score = calculate_health_score(outdated_dependencies, vulnerabilities, licenses, disallowed_licenses)
+    health_score = calculate_health_score(
+        outdated_dependencies, vulnerabilities, licenses, disallowed_licenses
+        )
     environment_metadata = get_environment_metadata()
 
     report = {
         "report_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "summary": {
             "outdated_dependencies_count": len(outdated_dependencies),
-            "vulnerabilities_count": sum(len(dep.get("vulnerabilities", [])) for dep in vulnerabilities),
+            "vulnerabilities_count": sum(
+                len(dep.get("vulnerabilities", [])) for dep in vulnerabilities
+                ),
             "licenses_count": len(licenses),
-            "health_score": health_score
+            "health_score": health_score,
         },
         "health_score": health_score,
         "environment": environment_metadata,
         "outdated_dependencies": outdated_dependencies,
         "vulnerabilities": vulnerabilities,
-        "licenses": licenses
+        "licenses": licenses,
     }
 
     try:
@@ -124,8 +145,20 @@ def generate_report(outdated_dependencies, vulnerabilities, licenses,
 
     return report
 
+
+def run():
+    """Entry point for CLI execution using sample data."""
+    sample_outdated = []
+    sample_vulnerabilities = []
+    sample_licenses = []
+    generate_report(
+        sample_outdated,
+        sample_vulnerabilities,
+        sample_licenses
+        )
+    
 if __name__ == "__main__":
-    # Ejemplo de uso rápido (demo):
+    # Example usage with sample data:
     sample_outdated = [
         {"name": "requests", "current_version": "2.25.0", "latest_version": "2.31.0"}
     ]
@@ -135,13 +168,19 @@ if __name__ == "__main__":
             "version": "2.25.0",
             "vulnerabilities": [
                 {"id": "CVE-1234", "description": "Sample vulnerability"}
-            ]
+            ],
         }
     ]
     sample_licenses = [
-        {"name": "requests", "version": "2.25.0", "license": "GPL-3.0", "license_text": "GPL License Text"}
+        {"name": "requests",
+        "version": "2.25.0", 
+        "license": "GPL-3.0", 
+        "license_text": "GPL License Text",
+        }
     ]
 
     disallowed_licenses = ["GPL-3.0", "AGPL-3.0"]
 
-    generate_report(sample_outdated, sample_vulnerabilities, sample_licenses, disallowed_licenses)
+    generate_report(
+        sample_outdated, sample_vulnerabilities, sample_licenses, disallowed_licenses
+    )
