@@ -79,11 +79,12 @@ def export_audit_history_to_csv(history_file=HISTORY_FILE, csv_file="audit_histo
 
     keys = history[0].keys()
     try:
-        with open(csv_file, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=keys)
-            writer.writeheader()
-            writer.writerows(history)
-        logging.info(f"✅ Audit history exported to: {csv_file}")
+        f = open(csv_file, "w", newline="")
+        writer = csv.DictWriter(f, fieldnames=keys)
+        writer.writeheader()
+        writer.writerows(history)
+        f.flush()
+        logging.info(f"✅ Audit history e)xported to: {csv_file}")
     except Exception as e:
         logging.error(f"Error exporting audit history to CSV: {e}")
 

@@ -1,7 +1,13 @@
 # audit/badge_generator.py
 
 import datetime
-import cairosvg
+#Import cairosvg doing try and except to avoid issues if cairosvg is not installed
+try:
+    import cairosvg
+    CAIROSVG_AVAILABLE = True
+except ImportError: #pragma: no cover -optional dependency
+    cairosvg = None
+    CAIROSVG_AVAILABLE = False
 
 # Teamplate for the badge SVG
 BADGE_TEMPLATE = """
@@ -42,11 +48,11 @@ def generate_badge(status, vulnerabilities_count=0, output_path_svg="badge.svg",
     date = datetime.datetime.now().strftime("%Y-%m-%d")
 
     # Choose color based on status
-    if status.lower() == "Secure":
+    if status.lower() == "secure":
         color = "#4c1"        # Green
-    elif status.lower() == "Outdated":
+    elif status.lower() == "outdated":
         color = "#dfb317"    # Yellow
-    elif status.lower() == "Vulnerable":
+    elif status.lower() == "vulnerable":
         color = "#e05d44"    # Red
     else:
         color = "#9f9f9f"    # Grey (default)
@@ -65,5 +71,7 @@ def generate_badge(status, vulnerabilities_count=0, output_path_svg="badge.svg",
 
     # Optional: convert to PNG
     if output_path_png:
+        if not CAIROSVG_AVAILABLE:
+            raise RuntimeError("cairosvg is required to convert SVG to PNG but is not installed.")
         cairosvg.svg2png(bytestring=badge_content.encode('utf-8'), write_to=output_path_png)
         print(f"[+] Badge PNG generated: {output_path_png}")
