@@ -2,7 +2,7 @@
 
 import unittest
 import json
-from unittest.mock import patch
+from unittest.mock import patch, mock_open
 from audit import license_checker
 
 class TestLicenseChecker(unittest.TestCase):
@@ -23,9 +23,9 @@ class TestLicenseChecker(unittest.TestCase):
         self.assertEqual(result[0]['license_text'], "MIT License Text")
 
         #Check exported JSON file
-        mock_file.assert_called_with('licenses.json0', 'w')
+        mock_file.assert_called_with('licenses.json', 'w')
         handle = mock_file()
-        handle.write.assert_calle() #Check if write was called
+        handle.write.assert_called() #Check if write was called
 
         #Check called subprocess command
         mock_run.assert_called_with(

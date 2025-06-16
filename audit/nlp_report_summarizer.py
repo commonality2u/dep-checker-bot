@@ -34,9 +34,9 @@ def summarize_report(report_file="audit_report.json"):
     licenses_count = report.get("summary", {}).get("licenses_count", 0)
     health_score = report.get("health_score", "N/A")
 
-    summary_parts.append(f"🔍 Auditory performed on {report_date}:")
+    summary_parts.append(f"🔍 Audit performed on {report_date}:")
     summary_parts.append(f"- Outdated dependencies: {outdated_count}")
-    summary_parts.append(f"- Vulnerabilites found: {vulnerabilities_count}")
+    summary_parts.append(f"- Vulnerabilities found: {vulnerabilities_count}")
     summary_parts.append(f"- Packages analyzed: {licenses_count}")
     summary_parts.append(f"- Health Score: {health_score}")
 

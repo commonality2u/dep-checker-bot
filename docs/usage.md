@@ -22,30 +22,24 @@ This will display all available options and usage instructions.
 
 ## Typical Workflow
 
-1. **Check for outdated dependencies:**
+1. **Check for outdated dependencies and vulnerabilities:**
  ```bash 
-python main.py check-dependencies
+python main.py --module dependency_checker
 ```
 
-This command scans your `requirements.txt` and shows which packages are outdated.
+This command scans your `requirements.txt`, lists outdated packages and checks for known vulnerabilities.
 
-2. **Check for known vulnerabilities (CVEs):**
+2. **Check for license issues:**
 ```bash
-python main.py check-vulnerabilities
+python main.py --module license_checker
 ```
-   This command uses tools like `pip-audit` and `safety` to scan your dependencies for known vulnerabilities.
+This uses `pip-licenses` (or `liccheck`) to verify that your dependencies comply with your license policy.
 
-3. **Check for license issues:**
+3. **Generate a badge (optional):**
 ```bash
-python main.py check-licenses
+python main.py --module badge_generator
 ```
-   This uses `liccheck` to check if any dependencies have problematic licenses.
-
-4. **Generate a badge (optional):**
-```bash
-python main.py generate-badge
-```
-   This creates a badge that shows the status of your dependencies (outdated, up-to-date, etc.) that you can include in your README or documentation.
+This creates a badge that shows the status of your dependencies (outdated, up-to-date, etc.) that you can include in your README or documentation.
 
 ## Example Output
 

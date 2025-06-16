@@ -9,7 +9,7 @@ except ImportError: #pragma: no cover -optional dependency
     cairosvg = None
     CAIROSVG_AVAILABLE = False
 
-# Teamplate for the badge SVG
+# Template for the badge SVG
 BADGE_TEMPLATE = """
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="20">
   <linearGradient id="b" x2="0" y2="100%">

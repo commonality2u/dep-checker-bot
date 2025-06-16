@@ -35,11 +35,9 @@ def check_disallowed_licenses(licenses, disallowed=DISALLOWED_LICENSES):
     return flagged
 
 #Export licenses to a JSON file
-def export_licenses_to_json(licenses):
-    """
-    Export the licenses list to a JSON file.
-    """
-    with open (output_file := "licenses.json", "w") as f:
+def export_licenses_to_json(licenses, output_file = "licenses.json"):
+    """Export the licenses list to a JSON file."""
+    with open (output_file, "w") as f:
         json.dump(licenses, f, indent =4)
     logging.info(f"Licneses report saved to: {output_file}")
     
