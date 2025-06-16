@@ -3,5 +3,4 @@ github
 pytest
 requests
 spacy
-uuid
-yaml
+pyyaml

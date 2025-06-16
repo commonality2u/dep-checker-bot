@@ -14,14 +14,14 @@ Modules included:
 
 __version__ = "1.0.0"
 
-from . import (
-    dependency_checker,
-    license_checker,
-    report_generator,
-    audit_history,
-    auto_pr_generator,
-    nlp_report_summarizer
-)
+__all__ = [
+    "dependency_checker",
+    "license_checker",
+    "report_generator",
+    "audit_history",
+    "auto_pr_generator",
+    "nlp_report_summarizer",
+]
 def get_version():
     """
     Get the current version of the audit package.
