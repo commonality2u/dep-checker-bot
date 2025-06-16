@@ -41,14 +41,14 @@ def summarize_report(report_file="audit_report.json"):
     summary_parts.append(f"- Health Score: {health_score}")
 
     if isinstance(health_score, (int, float)) and health_score < 80:
-        summary_parts.append("⚠️ Warning: Health Score is low. It is recommended to check dependencies and vulnerabilities")
+        summary_parts.append("⚠️ Warning: Health Score is low. Check dependencies and vulnerabilities")
     else:
         summary_parts.append("✅ Health Score is ok.")
 
     # Add automatic recommendations if there are outdated dependencies
     recommendations = generate_recommendations(report)
     if recommendations:
-        summary_parts.append("\n🔧 Recomendations:")
+        summary_parts.append("\n🔧 Recommendations:")
         summary_parts.extend(recommendations)
 
     # Highlight keywords such as "critical".
@@ -69,7 +69,7 @@ def generate_recommendations(report):
         latest_version = dep.get("latest_version")
         if name and current_version and latest_version:
             recommendations.append(
-                f"🔹 It is recommended to update '{name}' from the version {current_version} to {latest_version}."
+                f"🔹 Update '{name}' from version {current_version} to {latest_version}."
             )
     return recommendations
 
