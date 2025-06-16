@@ -1,5 +1,5 @@
 cairosvg
-github
+PyGithub
 pytest
 requests
 pyyaml

@@ -114,7 +114,13 @@ def main(requirements_file="requirements.txt", use_poetry=False):
     
     return {"outdated": outdated, "vulnerabilities": vulnerabilities}
 
+def run():
+    """Entry point for CLI execution."""
+    use_poetry = "--poetry" in sys.argv
+    requirements_file = "requirements.txt"
+    main(requirements_file, use_poetry)
 
+    
 if __name__ == "__main__":
     use_poetry = "--poetry" in sys.argv
     requirements_file = sys.argv[1] if len(sys.argv) > 1 else "requirements.txt"

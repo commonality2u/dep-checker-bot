@@ -49,19 +49,21 @@ def generate_badge(status, vulnerabilities_count=0, output_path_svg="badge.svg",
 
     # Choose color based on status
     if status.lower() == "secure":
-        color = "#4c1"        # Green
+        color = "#4c1" # Green
     elif status.lower() == "outdated":
-        color = "#dfb317"    # Yellow
+        color = "#dfb317" # Yellow
     elif status.lower() == "vulnerable":
-        color = "#e05d44"    # Red
+        color = "#e05d44" # Red
     else:
-        color = "#9f9f9f"    # Grey (default)
+        color = "#9f9f9f" # Grey (default)
 
     # Status text (with date and vulnerabilities)
     status_text = f"{status} ({vulnerabilities_count}) - {date}"
 
     # Render the badge
-    badge_content = BADGE_TEMPLATE.format(color=color, status=status_text, report_link=report_link)
+    badge_content = BADGE_TEMPLATE.format(
+        color=color, status=status_text, report_link=report_link
+        )
 
     # Save the SVG
     with open(output_path_svg, "w") as f:
@@ -72,6 +74,15 @@ def generate_badge(status, vulnerabilities_count=0, output_path_svg="badge.svg",
     # Optional: convert to PNG
     if output_path_png:
         if not CAIROSVG_AVAILABLE:
-            raise RuntimeError("cairosvg is required to convert SVG to PNG but is not installed.")
-        cairosvg.svg2png(bytestring=badge_content.encode('utf-8'), write_to=output_path_png)
+            raise RuntimeError(
+                "cairosvg is required to convert SVG to PNG but is not installed."
+                )
+        cairosvg.svg2png(
+            bytestring=badge_content.encode("utf-8"), write_to=output_path_png
+            )
         print(f"[+] Badge PNG generated: {output_path_png}")
+
+
+def run():
+    """Generate a default badge for CLI usage."""
+    generate_badge("secure")
