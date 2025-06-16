@@ -34,20 +34,21 @@ MODULES = {
     "report_generator": report_generator.run,
 }
 
+
 def run_all(dry_run=False):
     summary = {"success": 0, "failures": 0}
     logging.info("Running all audit modules...")
     for name in MODULES:
         run_module(name, dry_run=dry_run, summary=summary)
     print_summary(summary)
-    sys.exit(1 if summary['failures'] > 0 else 0)
+    sys.exit(1 if summary["failures"] > 0 else 0)
 
 def run_module(module_name, dry_run=False, summary=None):
     if module_name not in MODULES:
         logging.error(f"Module '{module_name}' not found.")
         logging.info("Use --list to see available modules.")
         if summary is not None:
-            summary['failures'] += 1
+            summary["failures"] += 1
         return
 
     try:
@@ -58,11 +59,11 @@ def run_module(module_name, dry_run=False, summary=None):
             MODULES[module_name]()
             logging.info(f"Module {module_name} completed successfully.")
         if summary is not None:
-            summary['success'] += 1
+            summary["success"] += 1
     except Exception as e:
         logging.error(f"Module {module_name} failed: {e}")
         if summary is not None:
-            summary['failures'] += 1
+            summary["failures"] += 1
 
 def list_modules():
     print("Available modules:")
@@ -71,7 +72,7 @@ def list_modules():
 
 def load_config(config_path):
     if os.path.exists(config_path):
-        with open(config_path, 'r') as file:
+        with open(config_path, "r") as file:
             config = json.load(file)
             logging.info(f"Loaded configuration from {config_path}")
             return config
@@ -79,10 +80,12 @@ def load_config(config_path):
         logging.error(f"Configuration file {config_path} not found.")
         sys.exit(1)
 
+
 def print_summary(summary):
     logging.info(f"Execution summary:")
     logging.info(f"  Success: {summary['success']}")
     logging.info(f"  Failures: {summary['failures']}")
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -91,32 +94,29 @@ def main():
     parser.add_argument(
         "--module",
         type=str,
-        help="Name of the module(s) to run (comma-separated) or 'all' to run them all."
+        help="Name of the module(s) to run (comma-separated) or 'all' to run them all.",
     )
     parser.add_argument(
-        "--list",
-        action="store_true",
-        help="List all available audit modules."
+        "--list", action="store_true", help="List all available audit modules."
     )
     parser.add_argument(
         "--quiet",
         action="store_true",
-        help="Suppress informational logs (show only errors)."
+        help="Suppress informational logs (show only errors).",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Simulate execution without actually running the modules."
+        help="Simulate execution without actually running the modules.",
     )
     parser.add_argument(
-        "--log-file",
-        type=str,
-        help="Path to a log file to save the logs."
+        "--log-file", type=str, help="Path to a log file to save the logs."
+        
     )
     parser.add_argument(
         "--config",
         type=str,
-        help="Path to a configuration file (JSON) with modules to run."
+        help="Path to a configuration file (JSON) with modules to run.",
     )
 
     args = parser.parse_args()
@@ -127,7 +127,9 @@ def main():
     if args.log_file:
         file_handler = logging.FileHandler(args.log_file)
         log_handlers.append(file_handler)
-    logging.basicConfig(level=log_level, format="[%(levelname)s] %(message)s", handlers=log_handlers)
+    logging.basicConfig(
+        level=log_level, format="[%(levelname)s] %(message)s", handlers=log_handlers
+    )
 
     if args.list:
         list_modules()
@@ -153,7 +155,7 @@ def main():
         run_module(module_name, dry_run=args.dry_run, summary=summary)
 
     print_summary(summary)
-    sys.exit(1 if summary['failures'] > 0 else 0)
+    sys.exit(1 if summary["failures"] > 0 else 0)
 
 if __name__ == "__main__":
     main()
