@@ -3,3 +3,4 @@ github
 pytest
 requests
 pyyaml
+aiohttp>=3.9.0
