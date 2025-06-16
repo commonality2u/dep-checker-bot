@@ -107,8 +107,11 @@ def get_audit_entries_by_score(min_score, history_file=HISTORY_FILE):
     filtered = [entry for entry in history if entry.get("health_score", 0) >= min_score]
     return filtered
 
-if __name__ == "__main__":
-    # Demo: Print audit history and export to CSV
+def run():
+    """Simple demostration run for the CLI."""
     history = load_audit_history()
     print(json.dumps(history, indent=4))
     export_audit_history_to_csv()
+
+if __name__ == "__main__":
+    run()

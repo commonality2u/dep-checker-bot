@@ -9,9 +9,11 @@ DISALLOWED_LICENSES = ["GPL-3.0", "AGPL-3.0"]
 
 logging.basicConfig(
     level=logging.INFO,
-    format='[%(levelname)s] %(asctime)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
+    format="[%(levelname)s] %(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+
 def export_poetry_requirements():
     """
     Export dependencies from Poetry to requirements.txt.
@@ -21,7 +23,9 @@ def export_poetry_requirements():
     export_file = Path("poetry_requirements.txt")
     subprocess.run(
         ["poetry", "export", "-f", "requirements.txt", "-o", str(export_file)],
-        capture_output=True, text=True, check=True
+        capture_output=True, 
+        text=True, 
+        check=True,
     )
     return str(export_file)
 
@@ -34,14 +38,18 @@ def check_disallowed_licenses(licenses, disallowed=DISALLOWED_LICENSES):
             logging.warning(f"- {pkg['name']} ({pkg['license']})")
     return flagged
 
+
 #Export licenses to a JSON file
 def export_licenses_to_json(licenses, output_file = "licenses.json"):
     """Export the licenses list to a JSON file."""
-    with open (output_file, "w") as f:
-        json.dump(licenses, f, indent =4)
+    with open(output_file, "w") as f:
+        json.dump(licenses, f, indent=4)
     logging.info(f"Licneses report saved to: {output_file}")
     
-def check_licenses(requirements_file="requirements.txt", use_poetry=False, output_file="licenses.json"):
+
+def check_licenses(
+        requirements_file="requirements.txt", use_poetry=False, output_file="licenses.json"
+        ):
     """
     Check for license compliance using pip-licenses (or liccheck).
     
@@ -70,16 +78,20 @@ def check_licenses(requirements_file="requirements.txt", use_poetry=False, outpu
         logging.info("Checking licenses using pip-licenses...")
         result = subprocess.run(
             ["pip-licenses", "--format", "json", "--from=mixed"],
-            capture_output=True, text=True, check=True
+            capture_output=True, 
+            text=True, 
+            check=True,
         )
         licenses_json = json.loads(result.stdout)
         for lic in licenses_json:
-            licenses.append({
+            licenses.append(
+                {
                 "name": lic.get("Name"),
                 "version": lic.get("Version"),
                 "license": lic.get("License"),
                 "license_text": lic.get("LicenseText", "N/A")
-            })
+                }
+            )
 
         # Check for disallowed licenses
         export_licenses_to_json(licenses, output_file)
@@ -93,6 +105,7 @@ def check_licenses(requirements_file="requirements.txt", use_poetry=False, outpu
 
     return licenses
 
+
 def main(requirements_file="requirements.txt", use_poetry=False):
     licenses = check_licenses(requirements_file, use_poetry)
     logging.info("=== License analysis ===")
@@ -100,8 +113,17 @@ def main(requirements_file="requirements.txt", use_poetry=False):
         logging.info(f"{lic['name']} (v{lic['version']}) - License: {lic['license']}")
     return licenses
 
+
+def run():
+    """Entry point for the CLI."""
+    use_poetry = "--poetry" in sys.argv
+    requirements_file = "requirements.txt"
+    main(requirements_file, use_poetry)
+
+    
 if __name__ == "__main__":
     import sys
+
     use_poetry = "--poetry" in sys.argv
     requirements_file = sys.argv[1] if len(sys.argv) > 1 else "requirements.txt"
     main(requirements_file, use_poetry)

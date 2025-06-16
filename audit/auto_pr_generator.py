@@ -140,6 +140,11 @@ def create_pull_request(
         logging.error(f"Unexpected error: {e}")
     return None
 
+
+def run():
+    """Demostration entry point for CLI integration."""
+    logging.info("auto_pr_generator module executed")
+
 if __name__ == "__main__":
     
     token = "your_github_token_here"
@@ -160,5 +165,5 @@ if __name__ == "__main__":
         author_name="Audit Bot",
         author_email="audit@example.com",
         min_health_score=85,
-        health_score=80  
+        health_score=80, 
     )
