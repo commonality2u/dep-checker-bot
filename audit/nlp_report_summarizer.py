@@ -3,16 +3,7 @@
 import json
 import logging
 from pathlib import Path
-import spacy
-import Spanish
 
-try:
-    
-    nlp = spacy.load("es_core_news_sm")
-    NLP_AVAILABLE = True
-except ImportError:
-    logging.warning("⚠️ spaCy is not installed. the NLP advanced summary will be disabled.")
-    NLP_AVAILABLE = False
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,35 +34,28 @@ def summarize_report(report_file="audit_report.json"):
     licenses_count = report.get("summary", {}).get("licenses_count", 0)
     health_score = report.get("health_score", "N/A")
 
-    summary_parts.append(f"🔍 Auditory realized at {report_date}:")
+    summary_parts.append(f"🔍 Auditory performed on {report_date}:")
     summary_parts.append(f"- Outdated dependencies: {outdated_count}")
-    summary_parts.append(f"- Finded vulnerabilities: {vulnerabilities_count}")
+    summary_parts.append(f"- Vulnerabilites found: {vulnerabilities_count}")
     summary_parts.append(f"- Packages analyzed: {licenses_count}")
     summary_parts.append(f"- Health Score: {health_score}")
 
     if isinstance(health_score, (int, float)) and health_score < 80:
-        summary_parts.append("⚠️ Caution: Health Score is low. It is recommended to check dependencies and vulnerabilities")
+        summary_parts.append("⚠️ Warning: Health Score is low. It is recommended to check dependencies and vulnerabilities")
     else:
         summary_parts.append("✅ Health Score is ok.")
 
-    # Añadir recomendaciones automáticas si hay dependencias desactualizadas
+    # Add automatic recommendations if there are outdated dependencies
     recommendations = generate_recommendations(report)
     if recommendations:
         summary_parts.append("\n🔧 Recomendations:")
         summary_parts.extend(recommendations)
 
-    # Resaltar palabras clave como 'crítico'
+    # Highlight keywords such as "critical".
     nlp_summary = "\n".join(summary_parts)
     nlp_summary = highlight_keywords(nlp_summary, ["critical", "high", "serious"])
 
-    # Resumir usando spaCy (opcional)
-    if NLP_AVAILABLE:
-        nlp_doc = nlp(nlp_summary)
-        summarized_text = " ".join([sent.text for sent in nlp_doc.sents])
-    else:
-        summarized_text = nlp_summary
-
-    return summarized_text
+    return nlp_summary
 
 def generate_recommendations(report):
     """
@@ -98,5 +82,5 @@ def highlight_keywords(text, keywords):
     return text
 
 if __name__ == "__main__":
-    resumen = summarize_report("audit_report.json")
-    print(resumen)
+    summary = summarize_report("audit_report.json")
+    print(summary)

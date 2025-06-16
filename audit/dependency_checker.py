@@ -46,6 +46,7 @@ def check_outdated_dependencies(requirements_file="requirements.txt", use_poetry
     except subprocess.CalledProcessError as e:
         logging.error(f"Error while checking outdated dependencies: {e}")
         return dependencies
+    return dependencies
 
 def check_vulnerabilities(requirements_file="requirements.txt", use_poetry = False):  
     """
@@ -82,9 +83,9 @@ def check_vulnerabilities(requirements_file="requirements.txt", use_poetry = Fal
         logging.error(f"Error al verificar vulnerabilidades: {e}")
     return vulnerabilities
 
-def main(requirements_file="requirements.txt"):
+def main(requirements_file="requirements.txt", use_poetry=False):
     logging.info("=== Analysis of outdated dependencies ===")
-    outdated = check_outdated_dependencies(requirements_file, use_poetry=False)
+    outdated = check_outdated_dependencies(requirements_file, use_poetry=use_poetry)
     for dep in outdated:
         logging.info(f"{dep['name']} (actual: {dep['current_version']}, última: {dep['latest_version']})")
     
