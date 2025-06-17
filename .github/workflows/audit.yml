@@ -2,9 +2,7 @@ name: CI - Dependency Checker
 
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -24,10 +22,37 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Install security tools
+      run: |
+        pip install pip-audit safety
+
     - name: Run tests
       run: |
         export PYTHONPATH=$PYTHONPATH:$(pwd)
         pytest tests/
+
+    - name: Run pip-audit
+      run: |
+        pip-audit -r requirements.txt -f json -o pip_audit_report.json
+
+    - name: Run safety
+      run: |
+        safety check -r requirements.txt --json > safety_report.json
+
+    - name: Generate audit report
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        python audit/report_generator.py
+
+    - name: Upload audit artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: audit-reports
+        path: |
+          pip_audit_report.json
+          safety_report.json
+          audit_report.json
+          audit_report.md
 
     - name: Run audit script
       env:
